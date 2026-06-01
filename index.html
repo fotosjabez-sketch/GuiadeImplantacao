@@ -1,0 +1,1392 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Revenda Mais — Guia de Parametrização</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --red: #E8184A;
+  --red-light: #FFF0F4;
+  --red-mid: #FFDAE5;
+  --red-dark: #C01038;
+  --bg: #F7F8FA;
+  --bg-white: #FFFFFF;
+  --border: #E4E7ED;
+  --border-dark: #D0D5DE;
+  --text: #0F1623;
+  --text-2: #4A5568;
+  --text-3: #8A96A8;
+  --green: #16A34A;
+  --green-bg: #F0FDF4;
+  --green-border: #BBF7D0;
+  --amber: #D97706;
+  --amber-bg: #FFFBEB;
+  --amber-border: #FDE68A;
+  --blue: #2563EB;
+  --blue-bg: #EFF6FF;
+  --blue-border: #BFDBFE;
+  --purple: #7C3AED;
+  --purple-bg: #F5F3FF;
+  --purple-border: #DDD6FE;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* ── TOP BAR ── */
+.topbar {
+  background: var(--bg-white);
+  border-bottom: 1px solid var(--border);
+  padding: 0 32px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+.topbar-left { display:flex; align-items:center; gap:20px; }
+.logo { display:flex; align-items:center; gap:9px; text-decoration:none; }
+.logo-icon {
+  width:34px; height:34px; background:var(--red);
+  border-radius:8px; display:flex; align-items:center; justify-content:center;
+}
+.logo-icon svg { width:18px; height:18px; }
+.logo-text { font-size:17px; font-weight:900; color:var(--text); letter-spacing:-0.3px; }
+.logo-text span { color:var(--red); }
+.top-badge {
+  background: var(--red-light);
+  color: var(--red);
+  border: 1px solid var(--red-mid);
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+.topbar-right { display:flex; align-items:center; gap:10px; }
+.progress-bar-wrap {
+  display:flex; align-items:center; gap:8px;
+  font-size:12px; font-weight:700; color:var(--text-3);
+}
+.progress-track {
+  width:120px; height:5px; background:var(--border);
+  border-radius:3px; overflow:hidden;
+}
+.progress-fill {
+  height:100%; background:var(--red);
+  border-radius:3px; transition:width 0.4s ease;
+}
+.progress-label { font-size:12px; font-weight:700; color:var(--text-2); }
+
+/* ── LAYOUT ── */
+.layout { display:flex; min-height:calc(100vh - 56px); }
+
+/* ── SIDEBAR ── */
+.sidebar {
+  width:252px; flex-shrink:0;
+  background: var(--bg-white);
+  border-right: 1px solid var(--border);
+  position: sticky; top:56px;
+  height: calc(100vh - 56px);
+  overflow-y: auto;
+  padding: 24px 0;
+}
+.sidebar-section { margin-bottom:6px; }
+.sidebar-section-label {
+  font-size:10px; font-weight:800; letter-spacing:1.5px;
+  text-transform:uppercase; color:var(--text-3);
+  padding:0 20px; margin-bottom:6px;
+}
+
+/* Meeting group */
+.meeting-group { margin-bottom:4px; }
+.meeting-header {
+  display:flex; align-items:center; gap:8px;
+  padding:8px 20px;
+  font-size:11px; font-weight:800; letter-spacing:0.5px;
+  text-transform:uppercase;
+}
+.meeting-dot {
+  width:6px; height:6px; border-radius:50%;
+  flex-shrink:0;
+}
+.meeting-dot.r1 { background:#E8184A; }
+.meeting-dot.r2 { background:#2563EB; }
+
+.step-btn {
+  display:flex; align-items:center; gap:10px;
+  padding:9px 20px 9px 32px;
+  cursor:pointer; border:none; background:none;
+  width:100%; text-align:left;
+  border-left:3px solid transparent;
+  transition:all 0.15s;
+  border-radius:0;
+}
+.step-btn:hover { background:var(--bg); }
+.step-btn.active {
+  background: var(--red-light);
+  border-left-color: var(--red);
+}
+.step-num {
+  width:22px; height:22px; border-radius:6px;
+  background:var(--border); display:flex; align-items:center;
+  justify-content:center; font-size:10px; font-weight:900;
+  color:var(--text-3); flex-shrink:0; transition:all 0.15s;
+}
+.step-btn.active .step-num {
+  background:var(--red); color:white;
+}
+.step-btn.done .step-num {
+  background:var(--green); color:white;
+}
+.step-name { font-size:12px; font-weight:700; color:var(--text-2); line-height:1.3; }
+.step-btn.active .step-name { color:var(--red); }
+.step-btn.done .step-name { color:var(--green); }
+
+.sidebar-divider { height:1px; background:var(--border); margin:16px 20px; }
+.sidebar-links { padding:0 20px; }
+.sidebar-links a {
+  display:flex; align-items:center; gap:8px;
+  padding:7px 0; font-size:12px; font-weight:600;
+  color:var(--text-3); text-decoration:none;
+  transition:color 0.15s;
+}
+.sidebar-links a:hover { color:var(--red); }
+
+/* ── MAIN ── */
+.main { flex:1; }
+.step-panel { display:none; }
+.step-panel.active { display:block; }
+
+/* ── STEP HEADER ── */
+.step-header {
+  background: var(--bg-white);
+  border-bottom: 1px solid var(--border);
+  padding: 28px 40px 24px;
+  position: relative;
+  overflow: hidden;
+}
+.step-header::before {
+  content:'';
+  position:absolute; top:0; right:0; bottom:0;
+  width:200px;
+  background: linear-gradient(to left, var(--red-light), transparent);
+  pointer-events:none;
+}
+.step-meeting-tag {
+  display:inline-flex; align-items:center; gap:6px;
+  padding:4px 12px; border-radius:20px;
+  font-size:11px; font-weight:800; letter-spacing:0.5px;
+  text-transform:uppercase; margin-bottom:12px;
+}
+.tag-r1 { background:var(--red-light); color:var(--red); border:1px solid var(--red-mid); }
+.tag-r2 { background:var(--blue-bg); color:var(--blue); border:1px solid var(--blue-border); }
+.step-title { font-size:clamp(20px,2.5vw,26px); font-weight:900; line-height:1.2; margin-bottom:8px; letter-spacing:-0.5px; }
+.step-desc { font-size:14px; color:var(--text-2); line-height:1.7; max-width:580px; }
+.step-meta {
+  display:flex; gap:10px; flex-wrap:wrap; margin-top:18px;
+}
+.meta-chip {
+  display:flex; align-items:center; gap:6px;
+  background:var(--bg); border:1px solid var(--border);
+  padding:6px 14px; border-radius:6px;
+  font-size:12px; font-weight:600; color:var(--text-2);
+}
+.meta-chip strong { color:var(--text); font-weight:800; }
+.step-counter {
+  position:absolute; top:28px; right:40px;
+  font-size:48px; font-weight:900; color:var(--red-mid);
+  letter-spacing:-3px; line-height:1;
+  font-variant-numeric:tabular-nums;
+  z-index:0;
+}
+
+/* ── STEP CONTENT ── */
+.step-content { padding:32px 40px; max-width:900px; }
+
+/* ── SECTION ── */
+.section { margin-bottom:36px; }
+.section-title {
+  font-size:11px; font-weight:800; letter-spacing:1.5px;
+  text-transform:uppercase; color:var(--text-3);
+  display:flex; align-items:center; gap:10px;
+  margin-bottom:16px;
+}
+.section-title::after { content:''; flex:1; height:1px; background:var(--border); }
+
+/* ── CAMINHO VISUAL ── */
+.path-visual {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius:10px;
+  padding: 16px 20px;
+  display:flex; align-items:center; gap:4px;
+  flex-wrap:wrap;
+  margin-bottom:16px;
+}
+.path-step {
+  display:flex; align-items:center; gap:4px;
+}
+.path-node {
+  background: var(--bg-white);
+  border: 1px solid var(--border);
+  padding: 5px 12px; border-radius:6px;
+  font-size:12px; font-weight:700; color:var(--text);
+  white-space:nowrap;
+}
+.path-node.highlight {
+  background:var(--red); color:white; border-color:var(--red);
+}
+.path-arrow { font-size:12px; color:var(--text-3); margin:0 2px; }
+
+/* ── ACTION ITEMS ── */
+.actions-list { display:flex; flex-direction:column; gap:8px; }
+.action-item {
+  background: var(--bg-white);
+  border: 1px solid var(--border);
+  border-radius:8px;
+  padding: 14px 18px;
+  display:flex; align-items:flex-start; gap:12px;
+  cursor:pointer; transition:all 0.15s;
+}
+.action-item:hover { border-color:var(--border-dark); box-shadow:0 1px 6px rgba(0,0,0,0.05); }
+.action-item.done { background:var(--green-bg); border-color:var(--green-border); }
+.action-check {
+  width:20px; height:20px; border-radius:5px;
+  border:2px solid var(--border-dark); flex-shrink:0;
+  display:flex; align-items:center; justify-content:center;
+  margin-top:1px; transition:all 0.15s;
+  font-size:11px; font-weight:900; color:transparent;
+}
+.action-item.done .action-check {
+  background:var(--green); border-color:var(--green); color:white;
+}
+.action-body { flex:1; }
+.action-title { font-size:13px; font-weight:700; color:var(--text); margin-bottom:3px; }
+.action-item.done .action-title { color:var(--green); text-decoration:line-through; text-decoration-color:rgba(22,163,74,0.4); }
+.action-desc { font-size:12px; color:var(--text-3); line-height:1.5; }
+
+/* ── PROGRESS ── */
+.progress-section { margin-bottom:16px; }
+.progress-row { display:flex; align-items:center; gap:10px; margin-bottom:8px; }
+.progress-track-big { flex:1; height:6px; background:var(--border); border-radius:3px; overflow:hidden; }
+.progress-fill-big { height:100%; background:var(--green); border-radius:3px; transition:width 0.3s; }
+.progress-text { font-size:12px; font-weight:700; color:var(--text-3); white-space:nowrap; }
+
+/* ── INFO BOX ── */
+.info-box {
+  border-radius:10px; padding:16px 20px;
+  display:flex; gap:12px; align-items:flex-start;
+  margin-bottom:12px;
+}
+.info-box.blue { background:var(--blue-bg); border:1px solid var(--blue-border); }
+.info-box.amber { background:var(--amber-bg); border:1px solid var(--amber-border); }
+.info-box.green { background:var(--green-bg); border:1px solid var(--green-border); }
+.info-box.purple { background:var(--purple-bg); border:1px solid var(--purple-border); }
+.info-icon { font-size:18px; flex-shrink:0; margin-top:1px; }
+.info-body {}
+.info-label { font-size:10px; font-weight:800; letter-spacing:0.5px; text-transform:uppercase; margin-bottom:4px; }
+.info-box.blue .info-label { color:var(--blue); }
+.info-box.amber .info-label { color:var(--amber); }
+.info-box.green .info-label { color:var(--green); }
+.info-box.purple .info-label { color:var(--purple); }
+.info-text { font-size:13px; color:var(--text-2); line-height:1.6; }
+
+/* ── PORTAIS GRID ── */
+.portais-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:10px; }
+.portal-chip {
+  background:var(--bg-white); border:1px solid var(--border);
+  border-radius:8px; padding:12px 16px;
+  display:flex; align-items:center; gap:10px;
+  font-size:13px; font-weight:700; color:var(--text);
+  text-decoration:none; transition:all 0.15s; cursor:pointer;
+}
+.portal-chip:hover {
+  border-color:var(--red); box-shadow:0 2px 8px rgba(232,24,74,0.1);
+  color:var(--red);
+}
+.portal-chip:hover .portal-dot { background:var(--red); }
+.portal-dot { width:8px; height:8px; border-radius:50%; background:var(--green); flex-shrink:0; transition:background 0.15s; }
+
+/* ── FINANCEIRO MODULOS ── */
+.fin-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.fin-card {
+  background:var(--bg-white); border:1px solid var(--border);
+  border-radius:8px; padding:14px 18px;
+}
+.fin-card-icon { font-size:20px; margin-bottom:6px; }
+.fin-card-title { font-size:13px; font-weight:800; color:var(--text); margin-bottom:3px; }
+.fin-card-desc { font-size:12px; color:var(--text-3); line-height:1.4; }
+
+/* ── PRE-REQUISITOS ── */
+.req-list { display:flex; flex-direction:column; gap:6px; }
+.req-item {
+  display:flex; align-items:center; gap:10px;
+  background:var(--bg-white); border:1px solid var(--border);
+  border-radius:7px; padding:10px 14px;
+  font-size:13px; font-weight:600; color:var(--text-2);
+}
+.req-icon { font-size:15px; }
+
+/* ── NAV ── */
+.step-nav {
+  display:flex; justify-content:space-between; align-items:center;
+  padding:18px 40px;
+  border-top:1px solid var(--border);
+  background:var(--bg-white);
+}
+.nav-btn {
+  display:flex; align-items:center; gap:7px;
+  padding:9px 20px; border-radius:7px;
+  font-size:13px; font-weight:800;
+  cursor:pointer; border:1px solid var(--border-dark);
+  background:var(--bg-white); color:var(--text-2);
+  font-family:'Plus Jakarta Sans',sans-serif;
+  transition:all 0.15s;
+}
+.nav-btn:hover { background:var(--bg); border-color:var(--border-dark); }
+.nav-btn.primary { background:var(--red); border-color:var(--red); color:white; }
+.nav-btn.primary:hover { background:var(--red-dark); }
+.nav-btn:disabled { opacity:0.3; cursor:not-allowed; }
+.nav-dots { display:flex; gap:5px; align-items:center; }
+.nav-dot {
+  width:7px; height:7px; border-radius:50%;
+  background:var(--border-dark); cursor:pointer; transition:all 0.15s;
+}
+.nav-dot.active { background:var(--red); width:20px; border-radius:4px; }
+.nav-dot.r2-dot.active { background:var(--blue); }
+
+/* ── STEP SUMMARY (overview card) ── */
+.summary-card {
+  background:var(--bg-white); border:1px solid var(--border);
+  border-radius:12px; padding:20px 24px;
+  display:flex; gap:16px; align-items:flex-start;
+  margin-bottom:12px;
+  transition:all 0.15s;
+}
+.summary-card:hover { box-shadow:0 2px 12px rgba(0,0,0,0.06); }
+.sc-num {
+  width:36px; height:36px; border-radius:10px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:15px; font-weight:900; flex-shrink:0;
+  color:white;
+}
+.sc-body {}
+.sc-title { font-size:14px; font-weight:800; color:var(--text); margin-bottom:4px; }
+.sc-desc { font-size:13px; color:var(--text-2); line-height:1.5; }
+
+/* ── MOBILE BOTTOM NAV ── */
+.mobile-bottom-nav { display:none; }
+
+/* ── SIDEBAR OVERLAY ── */
+.sidebar-overlay {
+  display:none;
+  position:fixed; inset:0;
+  background:rgba(0,0,0,0.4);
+  z-index:149;
+  backdrop-filter:blur(2px);
+}
+.sidebar-overlay.open { display:block; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+
+  /* Topbar */
+  .topbar { padding:0 16px; height:52px; }
+  .top-badge { display:none; }
+  .progress-track { width:80px; }
+  .progress-label { font-size:11px; }
+
+  /* Sidebar — drawer from left */
+  .sidebar {
+    position:fixed;
+    top:0; left:0; bottom:0;
+    width:280px;
+    height:100vh;
+    z-index:150;
+    transform:translateX(-100%);
+    transition:transform 0.25s ease;
+    padding-top:64px;
+    box-shadow:4px 0 24px rgba(0,0,0,0.12);
+  }
+  .sidebar.open {
+    transform:translateX(0);
+  }
+
+  /* Layout: no flex row, full width */
+  .layout { flex-direction:column; }
+  .main { width:100%; min-width:0; }
+
+  /* Step header */
+  .step-header { padding:20px 18px 18px; }
+  .step-counter { font-size:36px; top:20px; right:18px; }
+  .step-title { font-size:20px; padding-right:48px; }
+  .step-desc { font-size:13px; }
+  .step-meta { gap:7px; margin-top:14px; }
+  .meta-chip { font-size:11px; padding:5px 10px; }
+
+  /* Step content */
+  .step-content { padding:20px 16px; }
+
+  /* Path visual */
+  .path-visual { padding:12px 14px; gap:3px; }
+  .path-node { font-size:11px; padding:4px 9px; }
+  .path-arrow { font-size:11px; margin:0 1px; }
+
+  /* Action items */
+  .action-item { padding:12px 14px; }
+  .action-title { font-size:13px; }
+  .action-desc { font-size:12px; }
+
+  /* Info boxes */
+  .info-box { padding:13px 14px; }
+  .info-text { font-size:12px; }
+
+  /* Portais grid */
+  .portais-grid { grid-template-columns:repeat(auto-fill,minmax(130px,1fr)); gap:8px; }
+  .portal-chip { padding:10px 12px; font-size:12px; }
+
+  /* Financeiro grid */
+  .fin-grid { grid-template-columns:1fr; }
+
+  /* Step nav — hide on mobile, replaced by bottom nav */
+  .step-nav { display:none; }
+
+  /* Mobile bottom nav */
+  .mobile-bottom-nav {
+    display:flex;
+    position:fixed; bottom:0; left:0; right:0;
+    background:var(--bg-white);
+    border-top:1px solid var(--border);
+    padding:10px 16px;
+    gap:10px;
+    z-index:100;
+    box-shadow:0 -2px 12px rgba(0,0,0,0.07);
+  }
+  .mobile-nav-btn {
+    flex:1; display:flex; align-items:center; justify-content:center; gap:6px;
+    padding:10px 0; border-radius:8px;
+    font-size:13px; font-weight:800;
+    cursor:pointer; border:1px solid var(--border-dark);
+    background:var(--bg-white); color:var(--text-2);
+    font-family:'Plus Jakarta Sans',sans-serif;
+    transition:all 0.15s;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .mobile-nav-btn.primary { background:var(--red); border-color:var(--red); color:white; }
+  .mobile-nav-btn:disabled { opacity:0.3; cursor:not-allowed; }
+
+  /* Menu toggle button in topbar */
+  .menu-toggle { display:flex; }
+
+  /* Extra bottom padding so content doesn't hide behind bottom nav */
+  .main { padding-bottom:72px; }
+}
+
+/* Menu toggle — only visible on mobile */
+.menu-toggle {
+  display:none;
+  align-items:center; justify-content:center;
+  width:36px; height:36px;
+  background:var(--bg); border:1px solid var(--border);
+  border-radius:7px; cursor:pointer;
+  flex-shrink:0;
+  -webkit-tap-highlight-color:transparent;
+}
+.menu-toggle svg { width:18px; height:18px; stroke:var(--text-2); }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR OVERLAY -->
+<div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
+
+<!-- TOP BAR -->
+<nav class="topbar">
+  <div class="topbar-left">
+    <button class="menu-toggle" id="menu-toggle" onclick="toggleSidebar()" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+    <a href="#" class="logo">
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 10l2-4h10l2 4M3 10h18l1 7H2l1-7zM7 17v2M17 17v2"/>
+        </svg>
+      </div>
+      <div class="logo-text">revenda<span>mais</span></div>
+    </a>
+    <div class="top-badge">Guia de Parametrização</div>
+  </div>
+  <div class="topbar-right">
+    <div class="progress-bar-wrap">
+      <span class="progress-label" id="top-progress-label">Passo 1 de 7</span>
+      <div class="progress-track">
+        <div class="progress-fill" id="top-progress-fill" style="width:14%"></div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- LAYOUT -->
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">Reuniões</div>
+
+      <!-- Reunião 1 -->
+      <div class="meeting-group">
+        <div class="meeting-header">
+          <div class="meeting-dot r1"></div>
+          <span style="color:#E8184A;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.5px;">Reunião 01</span>
+        </div>
+        <button class="step-btn active" data-step="0" onclick="goStep(0)">
+          <div class="step-num">1</div>
+          <div class="step-name">Cadastro de Usuários</div>
+        </button>
+        <button class="step-btn" data-step="1" onclick="goStep(1)">
+          <div class="step-num">2</div>
+          <div class="step-name">Cadastro de Funcionários</div>
+        </button>
+        <button class="step-btn" data-step="2" onclick="goStep(2)">
+          <div class="step-num">3</div>
+          <div class="step-name">Cadastro de Veículo</div>
+        </button>
+        <button class="step-btn" data-step="3" onclick="goStep(3)">
+          <div class="step-num">4</div>
+          <div class="step-name">Entrada de Estoque</div>
+        </button>
+      </div>
+
+      <!-- Reunião 2 -->
+      <div class="meeting-group">
+        <div class="meeting-header">
+          <div class="meeting-dot r2"></div>
+          <span style="color:#2563EB;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.5px;">Reunião 02</span>
+        </div>
+        <button class="step-btn" data-step="4" onclick="goStep(4)">
+          <div class="step-num">5</div>
+          <div class="step-name">Saída de Estoque</div>
+        </button>
+        <button class="step-btn" data-step="5" onclick="goStep(5)">
+          <div class="step-num">6</div>
+          <div class="step-name">Portais de Integração</div>
+        </button>
+        <button class="step-btn" data-step="6" onclick="goStep(6)">
+          <div class="step-num">7</div>
+          <div class="step-name">Módulo Financeiro</div>
+        </button>
+      </div>
+    </div>
+
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-links">
+      <a href="https://ajuda.revendamais.com.br/pt-BR" target="_blank">📖 Central de Ajuda</a>
+      <a href="https://app.revendamais.com.br/application/index.php/home/treinamento" target="_blank">▶ Vídeos de Treinamento</a>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- ══════════════════════════════════════
+         PASSO 1 — Cadastro de Usuários
+    ══════════════════════════════════════ -->
+    <div class="step-panel active" id="step-0">
+      <div class="step-header">
+        <div class="step-counter">01</div>
+        <div class="step-meeting-tag tag-r1">🗓 Reunião 01 · Passo 1</div>
+        <div class="step-title">Cadastro de Usuários</div>
+        <div class="step-desc">Criação dos logins e senhas de acesso ao sistema, com definição de permissões por perfil de usuário.</div>
+        <div class="step-meta">
+          <div class="meta-chip">📍 <strong>Caminho:</strong> Menu → Conf. Gerais → Usuários → Novo+</div>
+          <div class="meta-chip">⏱ <strong>Tempo estimado:</strong> 10–15 min</div>
+        </div>
+      </div>
+      <div class="step-content">
+
+        <div class="section">
+          <div class="section-title">Como chegar</div>
+          <div class="path-visual">
+            <div class="path-step"><div class="path-node">Menu</div><div class="path-arrow">→</div></div>
+            <div class="path-step"><div class="path-node">Conf. Gerais</div><div class="path-arrow">→</div></div>
+            <div class="path-step"><div class="path-node">Usuários</div><div class="path-arrow">→</div></div>
+            <div class="path-step"><div class="path-node highlight">Novo+</div></div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-title">O que fazer</div>
+          <div class="progress-section">
+            <div class="progress-row">
+              <div class="progress-track-big"><div class="progress-fill-big" id="prog-0" style="width:0%"></div></div>
+              <div class="progress-text" id="prog-label-0">0 / 3 concluído</div>
+            </div>
+          </div>
+          <div class="actions-list" id="checklist-0">
+            <div class="action-item" onclick="toggleAction(this,'0')">
+              <div class="action-check">✓</div>
+              <div class="action-body">
+                <div class="action-title">Criar login e senha para cada usuário do sistema</div>
+                <div class="action-desc">Defina o e-mail/login e uma senha de acesso para cada pessoa que usará o Revenda Mais.</div>
+              </div>
+            </div>
+            <div class="action-item" onclick="toggleAction(this,'0')">
+              <div class="action-check">✓</div>
+              <div class="action-body">
+                <div class="action-title">Definir o perfil de permissões de cada usuário</div>
+                <div class="action-desc">Cada usuário pode ter acesso total (admin) ou restrito a módulos específicos conforme sua função.</div>
+              </div>
+            </div>
+            <div class="action-item" onclick="toggleAction(this,'0')">
+              <div class="action-check">✓</div>
+              <div class="action-body">
+                <div class="action-title">Testar acesso: cada usuário loga com suas credenciais</div>
+                <div class="action-desc">Validar que o login e a senha funcionam e que as permissões estão corretas antes de avançar.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-title">Ponto de atenção</div>
+          <div class="info-box amber">
+            <div class="info-icon">⚠️</div>
+            <div class="info-body">
+              <div class="info-label">Atenção</div>
+              <div class="info-text">Usuário e Funcionário são dois cadastros diferentes. O usuário é o acesso ao sistema — o funcionário é quem aparece como vendedor nas saídas de estoque. Os dois precisam ser feitos.</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="step-nav">
+        <button class="nav-btn" disabled>← Anterior</button>
+        <div class="nav-dots">
+          <div class="nav-dot active" onclick="goStep(0)"></div>
+          <div class="nav-dot" onclick="goStep(1)"></div>
+          <div class="nav-dot" onclick="goStep(2)"></div>
+          <div class="nav-dot" onclick="goStep(3)"></div>
+          <div class="nav-dot r2-dot" onclick="goStep(4)"></div>
+          <div class="nav-dot r2-dot" onclick="goStep(5)"></div>
+          <div class="nav-dot r2-dot" onclick="goStep(6)"></div>
+        </div>
+        <button class="nav-btn primary" onclick="goStep(1)">Próximo →</button>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════
+         PASSO 2 — Cadastro de Funcionários
+    ══════════════════════════════════════ -->
+    <div class="step-panel" id="step-1">
+      <div class="step-header">
+        <div class="step-counter">02</div>
+        <div class="step-meeting-tag tag-r1">🗓 Reunião 01 · Passo 2</div>
+        <div class="step-title">Cadastro de Funcionários / Vendedores</div>
+        <div class="step-desc">Registro dos funcionários que serão vinculados como vendedores nas saídas de veículo do estoque.</div>
+        <div class="step-meta">
+          <div class="meta-chip">📍 <strong>Caminho:</strong> Menu → Conf. Gerais → Funcionários → Novo+</div>
+          <div class="meta-chip">⏱ <strong>Tempo estimado:</strong> 5–10 min</div>
+        </div>
+      </div>
+      <div class="step-content">
+
+        <div class="section">
+          <div class="section-title">Como chegar</div>
+          <div class="path-visual">
+            <div class="path-step"><div class="path-node">Menu</div><div class="path-arrow">→</div></div>
+            <div class="path-step"><div class="path-node">Conf. Gerais</div><div class="path-arrow">→</div></div>
+            <div class="path-step"><div class="path-node">Funcionários</div><div class="path-arrow">→</div></div>
+            <div class="path-step"><div class="path-node highlight">Novo+</div></div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-title">O que fazer</div>
+          <div class="progress-section">
+            <div class="progress-row">
+              <div class="progress-track-big"><div class="progress-fill-big" id="prog-1" style="width:0%"></div></div>
+              <div class="progress-text" id="prog-label-1">0 / 3 concluído</div>
+            </div>
+          </div>
+          <div class="actions-list" id="checklist-1">
+            <div class="action-item" onclick="toggleAction(this,'1')">
+              <div class="action-check">✓</div>
+              <div class="action-body">
+                <div class="action-title">Cadastrar cada vendedor/funcionário pelo nome</div>
+                <div class="action-desc">Preencha nome completo e função. Esse nome aparecerá no relatório de vendas por vendedor.</div>
+              </div>
+            </div>
+            <div class="action-item" onclick="toggleAction(this,'1')">
+              <div class="action-check">✓</div>
+              <div class="action-body">
+                <div class="action-title">Verificar que os funcionários aparecem na lista de vendedores</div>
+                <div class="action-desc">Ao realizar uma saída de estoque, os nomes cadastrados aqui devem aparecer no campo "Vendedor".</div>
+              </div>
+            </div>
+            <div class="action-item" onclick="toggleAction(this,'1')">
+              <div class="action-check">✓</div>
+              <div class="action-body">
+                <div class="action-title">Confirmar que o vínculo usuário ↔ funcionário está ok (se aplicável)</div>
+                <div class="action-desc">Quando o mesmo colaborador tem login no sistema E é vendedor, o vínculo garante que os dados de performance sejam precisos.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-title">Por que isso importa</div>
+          <div class="info-box blue">
+            <div class="info-icon">💡</div>
+            <div class="info-body">
+              <div class="info-label">Impacto direto</div>
+              <div class="info-text">Os relatórios de veículos vendidos por vendedor (Rel. 50) só funcionam corretamente se os funcionários estiverem cadastrados antes das saídas. Cadastrar agora evita retrabalho depois.</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="step-nav">
+        <button class="nav-btn" onclick="goStep(0)">← Anterior</button>
+        <div class="nav-dots">
+          <div class="nav-dot" onclick="goStep(0)"></div>
+          <div class="nav-dot active" onclick="goStep(1)"></div>
+          <div class="nav-dot" onclick="goStep(2)"></div>
+          <div class="nav-dot" onclick="goStep(3)"></div>
+          <div class="nav-dot r2-dot" onclick="goStep(4)"></div>
+          <div class="nav-dot r2-dot" onclick="goStep(5)"></div>
+          <div class="nav-dot r2-dot" onclick="goStep(6)"></div>
+        </div>
+        <button class="nav-btn primary" onclick="goStep(2)">Próximo →</button>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════
+         PASSO 3 — Cadastro de Veículo
+    ══════════════════════════════════════ -->
+    <div class="step-panel" id="step-2">
+      <div class="step-header">
+        <div class="step-counter">03</div>
+        <div class="step-meeting-tag tag-r1">🗓 Reunião 01 · Passo 3</div>
+        <div class="step-title">Cadastro de um Carro no Estoque</div>
+        <div class="step-desc">Inclusão de um veículo no sistema via placa, com preenchimento automático pelo Denatran e informações complementares.</div>
+        <div class="step-meta">
+          <div class="meta-chip">📍 <strong>Caminho:</strong> Estoque (ícone do carro) → Novo+</div>
+          <div class="meta-chip">⏱ <strong>Tempo estimado:</strong> 15–20 min</div>
+        </div>
+      </div>
+      <div class="step-content">
+
+        <div class="section">
+          <div class="section-title">Como chegar</div>
+          <div class="path-visual">
+            <div class="path-step"><div class="path-node">🚗 Estoque</div><div class="path-arrow">→</div></div>
+            <div class="path-step"><div class="path-node highlight">Novo+</div><div class="path-arrow">→</div></div>
+            <div class="path-step"><div class="path-node">Informar Placa</div><div class="path-arrow">→</div></div>
+            <div class="path-step"><div class="path-node highlight">Buscar Denatran</div></div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-title">O que fazer</div>
+          <div class="progress-section">
+            <div class="progress-row">
+              <div class="progress-track-big"><div class="progress-fill-big" id="prog-2" style="width:0%"></div></div>
+              <div class="progress-text" id="prog-label-2">0 / 4 concluído</div>
+            </div>
+          </div>
+          <div class="actions-list" id="checklist-2">
+            <div class="action-item" onclick="toggleAction(this,'2')">
+              <div class="action-check">✓</div>
+              <div class="action-body">
+                <div class="action-title">Informar a placa e clicar em "Buscar Denatran"</div>
+                <div class="action-desc">O sistema consulta o Denatran e preenche automaticamente: marca, modelo, ano/modelo, cor, chassi e Renavam.</div>
+              </div>
+            </div>
+            <div class="action-item" onclick="toggleAction(this,'2')">
+              <div class="action-check">✓</div>
+              <div class="action-body">
+                <div class="action-title">Revisar e ajustar o nome do veículo</div>
+                <div class="action-desc">O nome gerado pelo Denatran é técnico. Ajuste para um título mais comercial antes de enviar aos portais (ex: "Fiat Uno Attractive 1.0 Flex").</div>
+              </div>
+            </div>
+            <div class="action-item" onclick="toggleAction(this,'2')">
+              <div class="action-check">✓</div>
+              <div class="action-body">
+                <div class="action-title">Preencher KM, cor, opcionais e descrição</div>
+                <div class="action-desc">Campos obrigatórios para exibição correta nos portais: quilometragem, combustível, câmbio, opcionais e fotos.</div>
+              </div>
+            </div>
+            <div class="action-item" onclick="toggleAction(this,'2')">
+              <div class="action-check">✓</div>
+              <div class="action-body">
+                <div class="action-title">Definir o valor de venda</div>
+                <div class="action-desc">Preencha o preço de venda que será exibido nos portais integrados. Pode ser alterado depois.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-title">Ponto de atenção</div>
+          <div class="info-box amber">
+            <div class="info-icon">⚠️</div>
+            <div class="info-body">
+              <div class="info-label">Não confunda os passos</div>
+              <div class="info-text">Cadastrar o veículo e dar entrada no estoque são dois passos separados. Aqui você cria o registro do carro. No próximo passo você faz a entrada financeira (valor de compra, forma de pagamento, proprietário anterior).</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="step-nav">
+        <button class="nav-btn" onclick="goStep(1)">← Anterior</button>
+        <div class="nav-dots">
+          <div class="nav-dot" onclick="goStep(0)"></div>
+          <div class="nav-dot" onclick="goStep(1)"></div>
+          <div class="nav-dot active" onclick="goStep(2)"></div>
+          <div class="nav-dot" onclick="goStep(3)"></div>
+          <div class="nav-dot r2-dot" onclick="goStep(4)"></div>
+          <div class="nav-dot r2-dot" onclick="goStep(5)"></div>
+          <div class="nav-dot r2-dot" onclick="goStep(6)"></div>
+        </div>
+        <button class="nav-btn primary" onclick="goStep(3)">Próximo →</button>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════
+         PASSO 4 — Entrada de Estoque
+    ══════════════════════════════════════ -->
+    <div class="step-panel" id="step-3">
+      <div class="step-header">
+        <div class="step-counter">04</div>
+        <div class="step-meeting-tag tag-r1">🗓 Reunião 01 · Passo 4</div>
+        <div class="step-title">Entrada de Estoque</div>
+        <div class="step-desc">Registro financeiro da aquisição do veículo: valor de compra, forma de pagamento, quitação e documentação.</div>
+        <div class="step-meta">
+          <div class="meta-chip">📍 <strong>Caminho:</strong> Ações → Entrada de Estoque <em>ou</em> Salvar Mais → Entrada</div>
+          <div class="meta-chip">⏱ <strong>Tempo estimado:</strong> 10 min</div>
+        </div>
+      </div>
+      <div class="step-content">
+
+        <div class="section">
+          <div class="section-title">Dois caminhos possíveis</div>
+          <div class="path-visual" style="margin-bottom:8px;">
+            <div class="path-step"><div class="path-node">Ações</div><div class="path-arrow">→</div></div>
+            <div class="path-step"><div class="path-node highlight">Entrada de Estoque</div></div>
+          </div>
+          <div class="path-visual">
+            <div class="path-step"><div class="path-node">Salvar Mais</div><div class="path-arrow">→</div></div>
+            <div class="path-step"><div class="path-node highlight">Entrada de Estoque</div></div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-title">O que preencher</div>
+          <div class="progress-section">
+            <div class="progress-row">
+              <div class="progress-track-big"><div class="progress-fill-big" id="prog-3" style="width:0%"></div></div>
+              <div class="progress-text" id="prog-label-3">0 / 4 concluído</div>
+            </div>
+          </div>
+          <div class="actions-list" id="checklist-3">
+            <div class="action-item" onclick="toggleAction(this,'3')">
+              <div class="action-check">✓</div>
+              <div class="action-body">
+                <div class="action-title">Informar o valor de compra do veículo</div>
+                <div class="action-desc">Esse é o custo real de aquisição. Ele impacta diretamente no cálculo de margem dos relatórios.</div>
+              </div>
+            </div>
+            <div class="action-item" onclick="toggleAction(this,'3')">
+              <div class="action-check">✓</div>
+              <div class="action-body">
+                <div class="action-title">Selecionar a forma de pagamento</div>
+                <div class="action-desc">Transferência, cheque, dinheiro, financiamento, etc. Define como a saída de caixa foi registrada.</div>
+              </div>
+            </div>
+            <div class="action-item" onclick="toggleAction(this,'3')">
+              <div class="action-check">✓</div>
+              <div class="action-body">
+                <div class="action-title">Indicar se o veículo já está quitado</div>
+                <div class="action-desc">Se houver financiamento ativo, registrar como "não quitado" para controle correto no financeiro.</div>
+              </div>
+            </div>
+            <div class="action-item" onclick="toggleAction(this,'3')">
+              <div class="action-check">✓</div>
+              <div class="action-body">
+                <div class="action-title">Preencher o antigo proprietário e observações de documentação</div>
+                <div class="action-desc">Nome do vendedor anterior e campo de obs. para registrar pendências de doc (ex: "CRV em nome do antigo proprietário").</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-title">Conclusão da Reunião 01</div>
+          <div class="info-box green">
+            <div class="info-icon">🎯</div>
+            <div class="info-body">
+              <div class="info-label">Reunião 01 concluída!</div>
+              <div class="info-text">Com esses 4 passos configurados, a loja está pronta para operar: usuários com acesso, funcionários cadastrados, e o primeiro veículo no estoque com entrada registrada. A Reunião 02 dará sequência com saída, portais e financeiro.</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="step-nav">
+        <button class="nav-btn" onclick="goStep(2)">← Anterior</button>
+        <div class="nav-dots">
+          <div class="nav-dot" onclick="goStep(0)"></div>
+          <div class="nav-dot" onclick="goStep(1)"></div>
+          <div class="nav-dot" onclick="goStep(2)"></div>
+          <div class="nav-dot active" onclick="goStep(3)"></div>
+          <div class="nav-dot r2-dot" onclick="goStep(4)"></div>
+          <div class="nav-dot r2-dot" onclick="goStep(5)"></div>
+          <div class="nav-dot r2-dot" onclick="goStep(6)"></div>
+        </div>
+        <button class="nav-btn primary" onclick="goStep(4)">Reunião 02 →</button>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════
+         PASSO 5 — Saída de Estoque
+    ══════════════════════════════════════ -->
+    <div class="step-panel" id="step-4">
+      <div class="step-header">
+        <div class="step-counter">05</div>
+        <div class="step-meeting-tag tag-r2">🗓 Reunião 02 · Passo 1</div>
+        <div class="step-title">Saída de Estoque</div>
+        <div class="step-desc">Processo de registro de saída de um veículo do estoque físico da loja — seja por venda, transferência ou baixa.</div>
+        <div class="step-meta">
+          <div class="meta-chip">📍 <strong>Caminho:</strong> Ações → Saída de Estoque</div>
+          <div class="meta-chip">⏱ <strong>Tempo estimado:</strong> 10–15 min</div>
+        </div>
+      </div>
+      <div class="step-content">
+
+        <div class="section">
+          <div class="section-title">Como chegar</div>
+          <div class="path-visual">
+            <div class="path-step"><div class="path-node">Ações</div><div class="path-arrow">→</div></div>
+            <div class="path-step"><div class="path-node highlight">Saída de Estoque</div></div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-title">O que preencher</div>
+          <div class="progress-section">
+            <div class="progress-row">
+              <div class="progress-track-big"><div class="progress-fill-big" id="prog-4" style="width:0%"></div></div>
+              <div class="progress-text" id="prog-label-4">0 / 4 concluído</div>
+            </div>
+          </div>
+          <div class="actions-list" id="checklist-4">
+            <div class="action-item" onclick="toggleAction(this,'4')">
+              <div class="action-check">✓</div>
+              <div class="action-body">
+                <div class="action-title">Selecionar o veículo pela placa ou nome</div>
+                <div class="action-desc">O sistema lista todos os veículos em estoque. Escolha o correto para iniciar o processo de saída.</div>
+              </div>
+            </div>
+            <div class="action-item" onclick="toggleAction(this,'4')">
+              <div class="action-check">✓</div>
+              <div class="action-body">
+                <div class="action-title">Vincular o vendedor responsável</div>
+                <div class="action-desc">Selecione o funcionário que realizou a venda. Esse dado alimenta os relatórios de performance por vendedor.</div>
+              </div>
+            </div>
+            <div class="action-item" onclick="toggleAction(this,'4')">
+              <div class="action-check">✓</div>
+              <div class="action-body">
+                <div class="action-title">Confirmar a data da saída</div>
+                <div class="action-desc">A data deve ser a da efetiva saída física do veículo da loja, não a data do contrato.</div>
+              </div>
+            </div>
+            <div class="action-item" onclick="toggleAction(this,'4')">
+              <div class="action-check">✓</div>
+              <div class="action-body">
+                <div class="action-title">Clicar em "Confirmar Saída"</div>
+                <div class="action-desc">O veículo sai do estoque ativo e aparece nos relatórios de vendidos. O anúncio nos portais é automaticamente encerrado.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-title">Ponto de atenção</div>
+          <div class="info-box blue">
+            <div class="info-icon">💡</div>
+            <div class="info-body">
+              <div class="info-label">Saída ≠ Baixa financeira</div>
+              <div class="info-text">A saída de estoque move o veículo da lista de ativos. O lançamento da receita da venda no módulo financeiro é um passo separado — importante para o fluxo de caixa ficar correto.</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="step-nav">
+        <button class="nav-btn" onclick="goStep(3)">← Anterior</button>
+        <div class="nav-dots">
+          <div class="nav-dot" onclick="goStep(0)"></div>
+          <div class="nav-dot" onclick="goStep(1)"></div>
+          <div class="nav-dot" onclick="goStep(2)"></div>
+          <div class="nav-dot" onclick="goStep(3)"></div>
+          <div class="nav-dot r2-dot active" onclick="goStep(4)"></div>
+          <div class="nav-dot r2-dot" onclick="goStep(5)"></div>
+          <div class="nav-dot r2-dot" onclick="goStep(6)"></div>
+        </div>
+        <button class="nav-btn primary" onclick="goStep(5)">Próximo →</button>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════
+         PASSO 6 — Portais de Integração
+    ══════════════════════════════════════ -->
+    <div class="step-panel" id="step-5">
+      <div class="step-header">
+        <div class="step-counter">06</div>
+        <div class="step-meeting-tag tag-r2">🗓 Reunião 02 · Passo 2</div>
+        <div class="step-title">Configuração dos Portais de Integração</div>
+        <div class="step-desc">Sincronização do estoque da loja com os principais canais de venda: Webmotors, iCarros, OLX Autos e Mercado Livre.</div>
+        <div class="step-meta">
+          <div class="meta-chip">📍 <strong>Caminho:</strong> Menu → Integrações → Portais de Estoque</div>
+          <div class="meta-chip">⏱ <strong>Tempo estimado:</strong> 20–30 min</div>
+        </div>
+      </div>
+      <div class="step-content">
+
+        <div class="section">
+          <div class="section-title">Como chegar</div>
+          <div class="path-visual">
+            <div class="path-step"><div class="path-node">Menu</div><div class="path-arrow">→</div></div>
+            <div class="path-step"><div class="path-node">Integrações</div><div class="path-arrow">→</div></div>
+            <div class="path-step"><div class="path-node highlight">Portais de Estoque</div></div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-title">Portais disponíveis — clique para ver o guia</div>
+          <div class="portais-grid">
+            <a class="portal-chip" href="https://ajuda.revendamais.com.br/pt-BR/articles/6088258-integrador-adicionar-webmotors-para-integracao-de-estoque" target="_blank"><div class="portal-dot"></div>Webmotors</a>
+            <a class="portal-chip" href="https://ajuda.revendamais.com.br/pt-BR/articles/7925336-integrador-adicionar-icarros-para-integracao-de-estoque" target="_blank"><div class="portal-dot"></div>iCarros</a>
+            <a class="portal-chip" href="https://ajuda.revendamais.com.br/pt-BR/articles/8851623-integrador-adicionar-olx-para-integracao-de-estoque" target="_blank"><div class="portal-dot"></div>OLX Autos</a>
+            <a class="portal-chip" href="https://ajuda.revendamais.com.br/pt-BR/articles/5955310-integrador-adicionar-mercado-livre-para-integracao-de-estoque" target="_blank"><div class="portal-dot"></div>Mercado Livre</a>
+            <a class="portal-chip" href="https://ajuda.revendamais.com.br/pt-BR/articles/7914640-integrador-adicionar-facebook-para-integracao-de-estoque" target="_blank"><div class="portal-dot"></div>Facebook</a>
+            <a class="portal-chip" href="https://ajuda.revendamais.com.br/pt-BR/articles/7892670-integrador-adicionar-mobiauto-para-integracao-de-estoque" target="_blank"><div class="portal-dot"></div>Mobiauto</a>
+            <a class="portal-chip" href="https://ajuda.revendamais.com.br/pt-BR/articles/9948965-integrador-adicionar-karvi-para-integracao-de-estoque" target="_blank"><div class="portal-dot"></div>Karvi</a>
+            <a class="portal-chip" href="https://ajuda.revendamais.com.br/pt-BR/articles/7436960-integrador-adicionar-autoline-para-integracao-de-estoque" target="_blank"><div class="portal-dot"></div>Autoline</a>
+            <a class="portal-chip" href="https://ajuda.revendamais.com.br/pt-BR/articles/7897383-integrador-adicionar-carro-sp-para-integracao-de-estoque" target="_blank"><div class="portal-dot"></div>Carro SP</a>
+            <a class="portal-chip" href="https://ajuda.revendamais.com.br/pt-BR/articles/7904325-integrador-adicionar-carros-na-serra-para-integracao-de-estoque" target="_blank"><div class="portal-dot"></div>Carros na Serra</a>
+            <a class="portal-chip" href="https://ajuda.revendamais.com.br/pt-BR/articles/7904787-integrador-adicionar-chaves-na-mao-para-integracao-de-estoque" target="_blank"><div class="portal-dot"></div>Chaves na Mão</a>
+            <a class="portal-chip" href="https://ajuda.revendamais.com.br/pt-BR/articles/7908388-integrador-adicionar-comprecar-para-integracao-de-estoque" target="_blank"><div class="portal-dot"></div>Comprecar</a>
+            <a class="portal-chip" href="https://ajuda.revendamais.com.br/pt-BR/articles/8106498-integrador-adicionar-litoral-car-para-integracao-de-estoque" target="_blank"><div class="portal-dot"></div>Litoral Car</a>
+            <a class="portal-chip" href="https://ajuda.revendamais.com.br/pt-BR/articles/8907471-integrador-adicionar-na-pista-para-integracao-de-estoque" target="_blank"><div class="portal-dot"></div>Na Pista</a>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-title">O que fazer</div>
+          <div class="progress-section">
+            <div class="progress-row">
+              <div class="progress-track-big"><div class="progress-fill-big" id="prog-5" style="width:0%"></div></div>
+              <div class="progress-text" id="prog-label-5">0 / 4 concluído</div>
+            </div>
+          </div>
+          <div class="actions-list" id="checklist-5">
+            <div class="action-item" onclick="toggleAction(this,'5')">
+              <div class="action-check">✓</div>
+              <div class="action-body">
+                <div class="action-title">Adicionar e configurar cada portal desejado</div>
+                <div class="action-desc">Cada portal exige credenciais específicas. A Webmotors exige: acesso Cockpit + chave API + CNPJ da loja.</div>
+              </div>
+            </div>
+            <div class="action-item" onclick="toggleAction(this,'5')">
+              <div class="action-check">✓</div>
+              <div class="action-body">
+                <div class="action-title">Marcar os veículos para envio a cada portal</div>
+                <div class="action-desc">Dentro do estoque, cada veículo precisa ser marcado individualmente para os portais que deve aparecer.</div>
+              </div>
+            </div>
+            <div class="action-item" onclick="toggleAction(this,'5')">
+              <div class="action-check">✓</div>
+              <div class="action-body">
+                <div class="action-title">Realizar a sincronização e validar os anúncios</div>
+                <div class="action-desc">Após sincronizar, verificar nos portais se os anúncios foram criados corretamente com fotos e preços.</div>
+              </div>
+            </div>
+            <div class="action-item" onclick="toggleAction(this,'5')">
+              <div class="action-check">✓</div>
+              <div class="action-body">
+                <div class="action-title">Entender que veículos não marcados não são anunciados</div>
+                <div class="action-desc">A sincronização envia apenas os veículos marcados. Veículos sem marcação não aparecem nos portais.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-title">Pré-requisito importante</div>
+          <div class="info-box amber">
+            <div class="info-icon">⚠️</div>
+            <div class="info-body">
+              <div class="info-label">Providenciar antes da reunião</div>
+              <div class="info-text">Se o cliente não tiver as credenciais dos portais em mãos (logins, chaves API), a configuração não avança. Avisar com pelo menos 2 dias de antecedência para providenciar os acessos.</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="step-nav">
+        <button class="nav-btn" onclick="goStep(4)">← Anterior</button>
+        <div class="nav-dots">
+          <div class="nav-dot" onclick="goStep(0)"></div>
+          <div class="nav-dot" onclick="goStep(1)"></div>
+          <div class="nav-dot" onclick="goStep(2)"></div>
+          <div class="nav-dot" onclick="goStep(3)"></div>
+          <div class="nav-dot r2-dot" onclick="goStep(4)"></div>
+          <div class="nav-dot r2-dot active" onclick="goStep(5)"></div>
+          <div class="nav-dot r2-dot" onclick="goStep(6)"></div>
+        </div>
+        <button class="nav-btn primary" onclick="goStep(6)">Próximo →</button>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════
+         PASSO 7 — Módulo Financeiro
+    ══════════════════════════════════════ -->
+    <div class="step-panel" id="step-6">
+      <div class="step-header">
+        <div class="step-counter">07</div>
+        <div class="step-meeting-tag tag-r2">🗓 Reunião 02 · Passo 3</div>
+        <div class="step-title">Introdução ao Módulo Financeiro</div>
+        <div class="step-desc">Apresentação das funcionalidades financeiras do sistema: contas, recebimentos, pagamentos e relatórios para controle do fluxo de caixa da loja.</div>
+        <div class="step-meta">
+          <div class="meta-chip">📍 <strong>Caminho:</strong> Menu → Financeiro</div>
+          <div class="meta-chip">⏱ <strong>Tempo estimado:</strong> 20–30 min</div>
+        </div>
+      </div>
+      <div class="step-content">
+
+        <div class="section">
+          <div class="section-title">Como chegar</div>
+          <div class="path-visual">
+            <div class="path-step"><div class="path-node">Menu</div><div class="path-arrow">→</div></div>
+            <div class="path-step"><div class="path-node highlight">Financeiro</div></div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-title">Módulos do financeiro</div>
+          <div class="fin-grid">
+            <div class="fin-card">
+              <div class="fin-card-icon">🏦</div>
+              <div class="fin-card-title">Contas & Bancos</div>
+              <div class="fin-card-desc">Cadastro das contas bancárias e caixa da loja. Ponto de partida para tudo funcionar.</div>
+            </div>
+            <div class="fin-card">
+              <div class="fin-card-icon">💳</div>
+              <div class="fin-card-title">Recebimentos</div>
+              <div class="fin-card-desc">Registro de entradas: vendas de veículos, serviços e outros recebimentos.</div>
+            </div>
+            <div class="fin-card">
+              <div class="fin-card-icon">📤</div>
+              <div class="fin-card-title">Pagamentos</div>
+              <div class="fin-card-desc">Controle das saídas: compra de veículos, despesas operacionais e fornecedores.</div>
+            </div>
+            <div class="fin-card">
+              <div class="fin-card-icon">📊</div>
+              <div class="fin-card-title">Relatórios</div>
+              <div class="fin-card-desc">DRE, fluxo de caixa e outros relatórios gerenciais para tomada de decisão.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-title">Pré-requisitos para o financeiro funcionar</div>
+          <div class="req-list" style="margin-bottom:16px;">
+            <div class="req-item"><div class="req-icon">🏦</div>Cadastro de Agência Bancária</div>
+            <div class="req-item"><div class="req-icon">💰</div>Cadastro de Conta Corrente</div>
+            <div class="req-item"><div class="req-icon">📥</div>Inclusão do Saldo Inicial</div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-title">O que fazer</div>
+          <div class="progress-section">
+            <div class="progress-row">
+              <div class="progress-track-big"><div class="progress-fill-big" id="prog-6" style="width:0%"></div></div>
+              <div class="progress-text" id="prog-label-6">0 / 4 concluído</div>
+            </div>
+          </div>
+          <div class="actions-list" id="checklist-6">
+            <div class="action-item" onclick="toggleAction(this,'6')">
+              <div class="action-check">✓</div>
+              <div class="action-body">
+                <div class="action-title">Cadastrar a agência bancária e conta corrente</div>
+                <div class="action-desc">Sem esse pré-requisito, o módulo financeiro não funciona corretamente. É o primeiro passo.</div>
+              </div>
+            </div>
+            <div class="action-item" onclick="toggleAction(this,'6')">
+              <div class="action-check">✓</div>
+              <div class="action-body">
+                <div class="action-title">Incluir o saldo inicial da conta</div>
+                <div class="action-desc">Informa ao sistema quanto havia em caixa/banco no momento de início do uso, para o saldo ficar correto.</div>
+              </div>
+            </div>
+            <div class="action-item" onclick="toggleAction(this,'6')">
+              <div class="action-check">✓</div>
+              <div class="action-body">
+                <div class="action-title">Navegar pelos módulos: Contas, Recebimentos, Pagamentos</div>
+                <div class="action-desc">Apresentação geral para o cliente entender onde registrar cada tipo de movimentação financeira.</div>
+              </div>
+            </div>
+            <div class="action-item" onclick="toggleAction(this,'6')">
+              <div class="action-check">✓</div>
+              <div class="action-body">
+                <div class="action-title">Mostrar como gerar o relatório gerencial</div>
+                <div class="action-desc">Acesso ao Menu → Financeiro → Relatórios para visualizar o DRE e o fluxo de caixa.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-title">Atenção ao plano</div>
+          <div class="info-box purple">
+            <div class="info-icon">📋</div>
+            <div class="info-body">
+              <div class="info-label">Verifique o plano do cliente</div>
+              <div class="info-text">O módulo financeiro pode ter funcionalidades diferentes dependendo do plano contratado. Verifique antes da reunião quais recursos estão disponíveis para evitar expectativas incorretas.</div>
+            </div>
+          </div>
+          <div class="info-box green">
+            <div class="info-icon">🏁</div>
+            <div class="info-body">
+              <div class="info-label">Parametrização completa!</div>
+              <div class="info-text">Com as 2 reuniões concluídas, a loja está configurada para operar: usuários, estoque, vendas, portais e financeiro. O próximo passo é acompanhar a rotina nas primeiras semanas de uso.</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="step-nav">
+        <button class="nav-btn" onclick="goStep(5)">← Anterior</button>
+        <div class="nav-dots">
+          <div class="nav-dot" onclick="goStep(0)"></div>
+          <div class="nav-dot" onclick="goStep(1)"></div>
+          <div class="nav-dot" onclick="goStep(2)"></div>
+          <div class="nav-dot" onclick="goStep(3)"></div>
+          <div class="nav-dot r2-dot" onclick="goStep(4)"></div>
+          <div class="nav-dot r2-dot" onclick="goStep(5)"></div>
+          <div class="nav-dot r2-dot active" onclick="goStep(6)"></div>
+        </div>
+        <button class="nav-btn" disabled style="opacity:0.3">Concluído ✓</button>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+let currentStep = 0;
+const totalSteps = 7;
+const stepCounts = { '0':3, '1':3, '2':4, '3':4, '4':4, '5':4, '6':4 };
+
+function toggleSidebar() {
+  document.querySelector('.sidebar').classList.toggle('open');
+  document.getElementById('sidebar-overlay').classList.toggle('open');
+}
+function closeSidebar() {
+  document.querySelector('.sidebar').classList.remove('open');
+  document.getElementById('sidebar-overlay').classList.remove('open');
+}
+
+function mobilePrev() { if(currentStep > 0) goStep(currentStep - 1); }
+function mobileNext() { if(currentStep < totalSteps - 1) goStep(currentStep + 1); }
+
+function updateMobileNav() {
+  const prev = document.getElementById('mob-prev');
+  const next = document.getElementById('mob-next');
+  if(prev) prev.disabled = currentStep === 0;
+  if(next) {
+    if(currentStep === totalSteps - 1) {
+      next.disabled = true;
+      next.textContent = 'Concluído ✓';
+    } else {
+      next.disabled = false;
+      next.textContent = 'Próximo →';
+    }
+  }
+}
+
+function goStep(idx) {
+  document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.step-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('step-' + idx).classList.add('active');
+  document.querySelector('[data-step="' + idx + '"]').classList.add('active');
+  currentStep = idx;
+  updateTopProgress();
+  updateMobileNav();
+  closeSidebar();
+  window.scrollTo(0, 0);
+}
+
+function updateTopProgress() {
+  const fill = document.getElementById('top-progress-fill');
+  const label = document.getElementById('top-progress-label');
+  const pct = Math.round(((currentStep + 1) / totalSteps) * 100);
+  fill.style.width = pct + '%';
+  label.textContent = 'Passo ' + (currentStep + 1) + ' de ' + totalSteps;
+}
+
+function toggleAction(el, listId) {
+  el.classList.toggle('done');
+  el.querySelector('.action-check').textContent = el.classList.contains('done') ? '✓' : '✓';
+  updateProgress(listId);
+  updateDoneInSidebar();
+}
+
+function updateProgress(listId) {
+  const list = document.getElementById('checklist-' + listId);
+  const total = list.querySelectorAll('.action-item').length;
+  const done = list.querySelectorAll('.action-item.done').length;
+  const pct = Math.round((done / total) * 100);
+  const fill = document.getElementById('prog-' + listId);
+  const label = document.getElementById('prog-label-' + listId);
+  if (fill) fill.style.width = pct + '%';
+  if (label) label.textContent = done + ' / ' + total + ' concluído';
+}
+
+function updateDoneInSidebar() {
+  for (let i = 0; i < totalSteps; i++) {
+    const list = document.getElementById('checklist-' + i);
+    if (!list) continue;
+    const total = list.querySelectorAll('.action-item').length;
+    const done = list.querySelectorAll('.action-item.done').length;
+    const btn = document.querySelector('[data-step="' + i + '"]');
+    if (done === total && total > 0) {
+      btn.classList.add('done');
+    } else {
+      btn.classList.remove('done');
+    }
+  }
+}
+</script>
+
+<!-- MOBILE BOTTOM NAV -->
+<div class="mobile-bottom-nav" id="mobile-bottom-nav">
+  <button class="mobile-nav-btn" id="mob-prev" onclick="mobilePrev()">← Anterior</button>
+  <button class="mobile-nav-btn primary" id="mob-next" onclick="mobileNext()">Próximo →</button>
+</div>
+</body>
+</html>
